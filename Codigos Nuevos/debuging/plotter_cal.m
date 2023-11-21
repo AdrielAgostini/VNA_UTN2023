@@ -1,0 +1,51 @@
+mode = 2;
+
+if (mode == 1)
+S(:,1) = mag2db(abs(S11_match));
+S(:,2) = mag2db(abs(S11_open));
+S(:,3) = mag2db(abs(S11_short));
+S(:,4) = mag2db(abs(S22_match));
+S(:,5) = mag2db(abs(S22_open));
+S(:,6) = mag2db(abs(S22_short));
+S(:,7) = mag2db(abs(S11_thru)); 
+S(:,8) = mag2db(abs(S21_thru));
+S(:,9) = mag2db(abs(S12_thru));
+S(:,10) = mag2db(abs(S22_thru));
+S(:,11) = angle(S11_match);
+S(:,12) = angle(S11_open);
+S(:,13) = angle(S11_short);
+S(:,14) = angle(S22_match);
+S(:,15) = angle(S22_open);
+S(:,16) = angle(S22_short);
+S(:,17) = angle(S11_thru); 
+S(:,18) = angle(S21_thru);
+S(:,19) = angle(S12_thru);
+S(:,20) = angle(S22_thru);
+names = ["S11 match", "S11 open","S11 short",...
+    "S22 match", "S22 open","S22 short",...
+    "S11 thru","S21 thru","S12 thru","S22 thru"];
+else 
+S(:,1:10) =  mag2db(abs(calibration_parameter));
+S(:,11:20) =  angle(calibration_parameter) * 180/pi;
+names = ["S11 open", "S11 short","S11 match",...
+    "S22 open", "S22 short","S22 match",...
+    "S11 thru","S21 thru","S12 thru","S22 thru"];
+end
+%%
+k=1
+for i = 1 : 20
+    
+    a=figure(i);
+    plot(S(:,i),'-o','MarkerSize',3,'MarkerEdgeColor','red');
+    grid on
+    grid minor
+    title(names(k));
+   %saveas(a,strcat("plot",num2str(i),".pdf"));
+    k=k+1;
+    if (k == 11)
+        k=1;
+    end
+end
+%close all
+
+
